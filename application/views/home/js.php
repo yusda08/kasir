@@ -1,8 +1,9 @@
+
 <script src="<?php echo base_url(); ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?php echo base_url(); ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="<?php echo base_url(); ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!--<script src="<?php echo base_url(); ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>-->
 <!-- FastClick -->
 <script src="<?php echo base_url(); ?>assets/bower_components/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
@@ -20,6 +21,27 @@
 <script src="<?php echo base_url(); ?>assets/bower_components/jquery-validation/src/localization/messages_id.js"></script>
 <script src="https://cdn.rawgit.com/igorescobar/jQuery-Mask-Plugin/1ef022ab/dist/jquery.mask.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/croppie.js"></script>
+<script type="text/javascript">
+function idleTimer() {
+    var t;
+    //window.onload = resetTimer;
+    window.onmousemove = resetTimer; // catches mouse movements
+    window.onmousedown = resetTimer; // catches mouse movements
+    window.onclick = resetTimer;     // catches mouse clicks
+    window.onscroll = resetTimer;    // catches scrolling
+    window.onkeypress = resetTimer;  //catches keyboard actions
+
+    function logout() {
+        window.location.href = '<?= site_url("Login/logout/".$kd_user);?> ';  //Adapt to actual logout script
+    }
+   function resetTimer() {
+        clearTimeout(t);
+        t = setTimeout(logout, 10000);  // time is in milliseconds (1000 is 1 second)
+//        t= setTimeout(reload, 10000);  // time is in milliseconds (1000 is 1 second)
+    }
+}
+idleTimer();
+</script>
 <script>
 
     $(function () {

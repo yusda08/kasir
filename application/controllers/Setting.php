@@ -26,10 +26,10 @@ class Setting extends MY_Controller {
     public function set_user() {
         if ($this->session->userdata('is_login')) {
             $data = $this->layout();
+            $record = $this->javasc();
             $data['name_page'] = 'Setting';
             $data['name_page_small'] = 'User';
             $record['get_user'] = $this->Model_setting->get_user();
-            $record['javasc'] = $this->load->view('home/js', NULL, TRUE);
             $data['content'] = $this->load->view('setting/set_user', $record, TRUE);
             $this->load->view('temp_home/layout', $data);
         }else{

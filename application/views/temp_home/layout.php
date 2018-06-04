@@ -17,7 +17,7 @@
                 </nav>
             </header>
             <!-- Full Width Column -->
-            <div class="content-wrapper">
+            <div class="content-wrapper" >
                 <div class="container">
                     <!-- Content Header (Page header) -->
                     <?php if (isset($name_page)) { ?>

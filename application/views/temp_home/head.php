@@ -99,4 +99,12 @@
         border-radius: 50%;
     }
     
+    .content-wrapper {
+                background-image: url('<?php echo base_url(); ?>assets/img/wpkas.jpg') !important; 
+                background-size: auto;
+                -webkit-background-size: 100% 100%;
+                background-repeat : no-repeat;
+                background-attachment:fixed ; 
+            }
+    
 </style>

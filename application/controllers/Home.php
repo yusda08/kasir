@@ -20,10 +20,15 @@ class Home extends MY_Controller {
     }
 
     public function index() {
+        $a = $this->session->userdata('is_login');
+        if ($a) {
         $data = $this->layout();
-        $record['javasc'] = $this->load->view('home/js', NULL, TRUE);
+        $record = $this->javasc();
         $data['content'] = $this->load->view('home/baranda', $record, TRUE);
         $this->load->view('temp_home/layout', $data);
+    }else{
+        redirect('Login/logout');
+    }
     }
 
 }

@@ -22,6 +22,9 @@ class Login extends MY_Controller{
         $username = $this->input->post('username');
         $password = $this->input->post('password');
         $row = $this->Model_login->validate_login($username, $password);
+        $kd_user = $row->kd_user;
+        $data['is_login']=1;
+        $this->Model_aksi->update('kd_user',$kd_user,'user',$data);
         $count_row = count($row);
         if ($count_row) { // jika data user benar
             if ($row->is_active == 1) {
@@ -45,11 +48,14 @@ class Login extends MY_Controller{
         }
     }
 
-    function logout() {
-        $a = $this->session->userdata('is_login');
+    function logout($kd_user) {
         $this->session->unset_userdata('is_login');
+        $data['is_login']=0;
+        $this->Model_aksi->update('kd_user',$kd_user,'user',$data);
         redirect('login');
     }
+    
+    
 
 }
 
