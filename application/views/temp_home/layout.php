@@ -39,11 +39,8 @@
                             </div>
                         </div>
                         <?= $content; ?>
-                        <!-- /.box -->
                     </section>
-                    <!-- /.content -->
                 </div>
-                <!-- /.container -->
             </div>
             <!-- /.content-wrapper -->
             <footer class="main-footer" style="background-color: #000; color: #FFF">

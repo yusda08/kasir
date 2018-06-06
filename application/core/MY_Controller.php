@@ -15,6 +15,7 @@ class MY_Controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->library('user_agent');
     }
 
     public function layout() {
@@ -32,6 +33,30 @@ class MY_Controller extends CI_Controller {
         $id['kd_user']= $a['kd_user'];
         $data['javasc'] = $this->load->view('home/js', $id, TRUE);
         return $data;
+    }
+    
+    public function aktifitas($ket){
+        $a = $this->session->userdata('is_login');
+        if ($this->agent->is_browser()) {
+            $browser = $this->agent->browser() . ' ' . $this->agent->version() . ' (' . $this->agent->platform() . ')';
+        } elseif ($this->agent->is_robot()) {
+            $browser = $this->agent->robot();
+        } elseif ($this->agent->is_mobile()) {
+            $browser = $this->agent->mobile();
+        } else {
+            $browser = 'Unidentified User Agent';
+        } 
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $nm_komputer = gethostbyaddr($_SERVER['REMOTE_ADDR']);
+        $data1['ip'] = $ip;
+        $data1['tanggal'] = date("Y-m-d");
+        $data1['jam'] = date("H:i:s");
+        $data1['nm_browser'] = $browser;
+        $data1['nm_komputer'] = $nm_komputer;
+        $data1['nama_admin'] = $a['nama_user'];;
+        $data1['keterangan'] = $ket;
+        $data1['level'] = $a['ket_level'];
+        $this->Model_aksi->insert('aktifitas', $data1);
     }
 
 }

@@ -36,7 +36,7 @@ function idleTimer() {
     }
    function resetTimer() {
         clearTimeout(t);
-        t = setTimeout(logout, 10000);  // time is in milliseconds (1000 is 1 second)
+        t = setTimeout(logout, 1800000);  // time is in milliseconds (1000 is 1 second)
 //        t= setTimeout(reload, 10000);  // time is in milliseconds (1000 is 1 second)
     }
 }
@@ -64,6 +64,21 @@ idleTimer();
     });
 </script>   
 <script>
+    function sukses(ket) {
+        $("#notivs").html('<div class="alert alert-success alert-dismissable animated fadeIn" id="notification"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> <h4><i class="icon fa fa-check"></i> Sukses!</h4> Berhasil di ' + ket + '. </div>');
+        $('#close-modal').trigger("click");
+        setTimeout(function () {
+            location.reload();
+            $('#notification').fadeOut('slow');
+        }, 2000);
+    }
+    function gagal(ket) {
+        $("#notivs").html('<div class="alert alert-danger alert-dismissible" id="alert-notification"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h4><i class="icon fa fa-ban"></i> Peringatan!</h4> Gagal Di Simpan. </div>');
+        $('#close-modal').trigger("click");
+        setTimeout(function () {
+            $('#alert-notification').fadeOut('slow');
+        }, 2000);
+    }
     $(document).ready(function () {
         $("#flip").click(function () {
             $("#panel").slideToggle("slow");
