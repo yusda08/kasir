@@ -29,7 +29,7 @@ echo $javasc;
                     $no = 1;
                     $jumlah = $get_user->num_rows();
                     foreach ($get_user->result() as $row) {
-                        if ($a['kd_level'] == $row->kd_level) {
+                        if ($a['kd_user'] == $row->kd_user) {
                             $att = 'disabled';
                         } else {
                             $att = '';
@@ -50,13 +50,20 @@ echo $javasc;
                             </td>
                             <td class="text-center">
                                 <?php if ($row->is_active == 1) { ?>
-                                    <button <?= $att; ?> class="btn btn-sm btn-flat btn-block btn-success">Aktif</button>
+                                    <button <?= $att; ?> class="btn btn-sm btn-flat btn-block btn-success" onclick="aksi_kunci('<?= $row->kd_user; ?>', 'kunci');">Aktif</button>
                                 <?php } else { ?>
-                                    <button class="btn btn-sm btn-flat btn-block btn-danger">Non Aktif</button>
+                                    <button class="btn btn-sm btn-flat btn-block btn-danger" onclick="aksi_kunci('<?= $row->kd_user; ?>', 'buka');">Non Aktif</button>
                                 <?php } ?>
                             </td>
                             <td class="text-center">
-                                <button  <?= $att; ?> class="btn btn-sm btn-flat btn-danger"><i class="fa fa-trash"></i> Hapus</button>
+                                <button <?= $att; ?> title="hapus user" class="btn btn-flat btn-sm btn-danger" data-toggle="modal" 
+                                                     data-target="#aksi_user" 
+                                                     data-username ="<?= $row->username; ?>"
+                                                     data-password="<?= $row->password; ?>"
+                                                     data-kd_level="<?= $row->kd_level; ?>"
+                                                     data-nama_user="<?= $row->nama_user; ?>"
+                                                     data-kd_user ="<?= $row->kd_user; ?>"
+                                                     data-ket="hapus" ><i class="fa fa-trash"></i> Hapus</button>
                             </td>
                         </tr>
                     <?php } ?>
@@ -85,7 +92,7 @@ echo $javasc;
                                     <option value=''> Pilih Level User</option>
                                     <?php
                                     foreach ($get_levelUser as $row_lvl) {
-                                        echo"<option value='$row_lvl->kd_level'>".$row_lvl->ket_level.$row_lvl->kd_level."</option>";
+                                        echo"<option value='$row_lvl->kd_level'>" . $row_lvl->ket_level . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -117,6 +124,7 @@ echo $javasc;
                             </div>
                         </div>
                         <input type='hidden' name='ket' class="form-control ket" id='ket' >
+                        <input type='hidden' name='kd_user' class="form-control kd_user" >
                     </div>
                 </div>
                 <div class="modal-footer bg-gray-active">
@@ -138,24 +146,23 @@ echo $javasc;
         var kd_user = button.data('kd_user');
         var modal = $(this);
         modal.find('.modal-body input.ket').val(ket);
-        
+
         if (ket == 'tambah') {
             modal.find('#editlabel').html('<b>Form Tambah Data User</b>');
-            modal.find('.modal-body select.kd_level').val(kd_level).change();
+            modal.find('.modal-body select.kd_level').val('').change();
             modal.find('.modal-body input.nama_admin').val('').removeAttr('readonly', 'readonly');
             modal.find('.modal-body input.username').val('').removeAttr('readonly', 'readonly');
-            modal.find('.modal-body input.no_telpon').val('').removeAttr('readonly', 'readonly');
-            modal.find('.modal-body input.email').val('').removeAttr('readonly', 'readonly');
-            modal.find('.modal-body input.id').val('');
+            modal.find('.modal-body input.nama_user').val('').removeAttr('readonly', 'readonly');
+            modal.find('.modal-body input.kd_user').val('');
             modal.find('.pass').removeClass('hidden');
             modal.find('.submit').html('<button type="submit" class="btn btn-success btn-flat"><i class="fa fa-save"></i> Simpan</button>');
         } else if (ket == 'hapus') {
             modal.find('#editlabel').html('<b>Form Hapus Data User</b>');
             modal.find('.modal-body input.password').val(password).attr('readonly', 'readonly');
-            modal.find('.modal-body input.nama_admin').val(nama_user).attr('readonly', 'readonly');
+            modal.find('.modal-body input.nama_user').val(nama_user).attr('readonly', 'readonly');
             modal.find('.modal-body input.username').val(username).attr('readonly', 'readonly');
             modal.find('.modal-body input.kd_user').val(kd_user);
-            modal.find('.modal-body select.kd_level').val(kd_level).change();
+            modal.find('.modal-body select.kd_level').val(kd_level).change().attr('disabled', 'disabled');
             modal.find('.pass').addClass('hidden');
             modal.find('.submit').html('<button type="submit" class="btn btn-danger btn-flat"><i class="fa fa-save"></i> Hapus</button>');
         }
@@ -171,7 +178,7 @@ echo $javasc;
             var ket = $('#ket').val();
             if (ket == 'tambah') {
                 var url_form = '<?= site_url("Setting/insertUser"); ?>';
-            }else if (ket == 'hapus') {
+            } else if (ket == 'hapus') {
                 var url_form = '<?= site_url("Setting/deleteUser"); ?>';
             }
             $.ajax({
@@ -188,12 +195,12 @@ echo $javasc;
             });
         }
     });
-    function aksi_kunci(id, ket) {
+    function aksi_kunci(kd_user, ket) {
         var url_form = '<?= site_url('Setting/updateKunci'); ?>';
         $.ajax({
             type: 'POST',
             url: url_form,
-            data: {id: id, ket: ket},
+            data: {kd_user: kd_user, ket: ket},
             success: function (data) {
                 if (data == 'true') {
                     sukses(ket);

@@ -126,17 +126,52 @@ class Setting extends MY_Controller {
             redirect($url);
         }
     }
-    
+
     function insertUser() {
-        $data['username'] = $this->input->post('username');
+        $username = $this->input->post('username');
+        $data['username'] = $username;
         $data['password'] = $this->input->post('password');
         $data['nama_user'] = $this->input->post('nama_user');
         $data['kd_level'] = $this->input->post('kd_level');
         $qry = $this->Model_aksi->insert('user', $data);
         if ($qry) {
+            $ket = 'Menambah User Dengan Username = ' . $id;
+            $this->aktifitas($ket);
             echo 'true';
         } else {
             echo 'false';
         }
     }
+
+    function updateKunci() {
+        $ket = $this->input->post('ket');
+        $id = $this->input->post('kd_user');
+        if ($ket == 'kunci') {
+            $kunci = 0;
+        } elseif ($ket == 'buka') {
+            $kunci = 1;
+        }
+        $data['is_active'] = $kunci;
+        $qry = $this->Model_aksi->update('kd_user', $id, 'user', $data);
+        if ($qry) {
+            $ket = 'Mengaktifkan User Dengan ID = ' . $id;
+            $this->aktifitas($ket);
+            echo 'true';
+        } else {
+            echo 'false';
+        }
+    }
+
+    function deleteUser() {
+        $id = $this->input->post('kd_user');
+        $qry = $this->Model_aksi->delete('kd_user', $id, 'user');
+        if ($qry) {
+            $ket = 'Menghapus User Dengan ID = ' . $id;
+            $this->aktifitas($ket);
+            echo 'true';
+        } else {
+            echo 'false';
+        }
+    }
+
 }
