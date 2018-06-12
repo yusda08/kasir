@@ -62,7 +62,7 @@
     $lambang = 'fa-check';
     $notify = 'Sukses!';
     ?>
-    <body class="hold-transition fixed login-page custom-body login">
+    <body class="hold-transition custom-body">
         <div class="container" >
             <div class="login-box">
                 <div class="row">

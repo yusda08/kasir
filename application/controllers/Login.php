@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends MY_Controller{
+class Login extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -12,7 +12,7 @@ class Login extends MY_Controller{
 
     public function index() {
         if ($this->session->userdata('is_login')) {
-                redirect('home');
+            redirect('home');
         } else {
             $this->load->view('login');
         }
@@ -23,8 +23,6 @@ class Login extends MY_Controller{
         $password = $this->input->post('password');
         $row = $this->Model_login->validate_login($username, $password);
         $kd_user = $row->kd_user;
-        $data['is_login']=1;
-        $this->Model_aksi->update('kd_user',$kd_user,'user',$data);
         $count_row = count($row);
         if ($count_row) { // jika data user benar
             if ($row->is_active == 1) {
@@ -39,6 +37,8 @@ class Login extends MY_Controller{
                     'foto' => $row->foto
                 );
                 $this->session->set_userdata('is_login', $data);
+                $data['is_login'] = 1;
+                $this->Model_aksi->update('kd_user', $kd_user, 'user', $data);
                 echo "true";
             } else {
                 echo "false";
@@ -50,12 +50,10 @@ class Login extends MY_Controller{
 
     function logout($kd_user) {
         $this->session->unset_userdata('is_login');
-        $data['is_login']=0;
-        $this->Model_aksi->update('kd_user',$kd_user,'user',$data);
+        $data['is_login'] = 0;
+        $this->Model_aksi->update('kd_user', $kd_user, 'user', $data);
         redirect('login');
     }
-    
-    
 
 }
 

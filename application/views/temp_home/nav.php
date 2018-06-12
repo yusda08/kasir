@@ -16,6 +16,11 @@
                 <li><?php echo anchor('Setting/set_profil', 'Setting Profil') ?></li>
             </ul>
         </li>
+        <li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'><span class="glyphicon glyphicon-modal-window"></span> Master<b class='caret'></b></a>
+            <ul class='dropdown-menu'>
+                <li><?php echo anchor('Master/jenis_barang', 'Jenis Barang') ?></li>
+            </ul>
+        </li>
     </ul>
     <ul class="nav navbar-nav pull-right">    
         <li class="bg-gray-active" ><?php echo anchor('Login/logout/'.$kd_user, 'Log Out') ?></li>
